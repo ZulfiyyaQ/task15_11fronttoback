@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\task15_11fronttoback.props" />
+</Project>
