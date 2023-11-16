@@ -18,10 +18,12 @@ namespace task15_11fronttoback.Controllers
         public IActionResult Index()
         {
             List<Product> products = _context.Products.OrderByDescending(p => p.Id).Take(8).ToList();
+            List<Slide> slides = _context.Slides.OrderBy(p => p.Id).Take(2).ToList();
 
             HomeVM vm = new()
             {
                 Products = products,
+                Slides = slides
             };
 
             return View(vm);

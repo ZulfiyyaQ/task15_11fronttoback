@@ -11,5 +11,6 @@ namespace task15_11fronttoback.DAL
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Slide> Slides { get; set; }
     }
 }
