@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using task15_11fronttoback.DAL;
 using task15_11fronttoback.Models;
 using task15_11fronttoback.ViewModels;
@@ -17,18 +18,19 @@ namespace task15_11fronttoback.Controllers
         }
         public IActionResult Index()
         {
-            List<Product> products = _context.Products.OrderByDescending(p => p.Id).Take(8).ToList();
-            List<Slide> slides = _context.Slides.OrderBy(p => p.Id).Take(2).ToList();
+            List<Slide> slides = _context.Slides.OrderBy(p => p.Id).ToList();
+            List<Product> productList = _context.Products.Include(x => x.ProductImages).ToList();
 
-            HomeVM vm = new()
+            HomeVM vm = new HomeVM
             {
-                Products = products,
-                Slides = slides
+                Products = productList,
+                Slides = slides,
+                LatestProducts = productList.OrderByDescending(p => p.Id).Take(8).ToList()
             };
-
             return View(vm);
         }
 
+         
         public IActionResult About()
         {
             return View();

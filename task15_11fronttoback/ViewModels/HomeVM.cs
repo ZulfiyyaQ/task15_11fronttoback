@@ -6,5 +6,6 @@ namespace task15_11fronttoback.ViewModels
     {
         public List<Product> Products { get; set; }
         public List<Slide> Slides { get; set; }
+        public List<Product> LatestProducts { get; set; }
     }
 }
