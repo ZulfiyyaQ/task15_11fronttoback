@@ -7,12 +7,12 @@ using task15_11fronttoback.ViewModels;
 
 namespace task15_11fronttoback.Controllers
 {
-    public class ProductsController1 : Controller
+    public class ProductsController : Controller
     {
         private readonly AppDbContext _context;
 
 
-        public ProductsController1(AppDbContext context)
+        public ProductsController(AppDbContext context)
         {
             _context = context;
         }
@@ -29,7 +29,13 @@ namespace task15_11fronttoback.Controllers
                 return BadRequest();
             }
 
-            Product product = _context.Products.Include(x => x.Category).Include(x => x.ProductImages).FirstOrDefault(x => x.Id == id);
+            Product product = _context.Products
+                .Include(x => x.Category)
+                .Include(x => x.ProductImages)
+                .Include(x=>x.ProductTags).ThenInclude(pt=>pt.Tag)
+                .Include(x => x.ProductColors).ThenInclude(pt => pt.Color)
+                .Include(x => x.ProductSizes).ThenInclude(pt => pt.Size)
+                .FirstOrDefault(x => x.Id == id);
 
             if (product == null)
             {

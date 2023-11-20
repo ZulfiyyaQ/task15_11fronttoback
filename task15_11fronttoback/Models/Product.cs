@@ -9,7 +9,10 @@
         public string SKU { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-        public List<ProductImg> ProductImages { get; set; }
-        
+        public List<ProductImg>? ProductImages { get; set; }
+        public List<ProductTags>? ProductTags { get; set; }
+        public List<ProductColor>? ProductColors { get; set; }
+        public List<ProductSize>? ProductSizes{ get; set; }
+
     }
 }
