@@ -15,6 +15,7 @@ namespace task15_11fronttoback.DAL
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductImg> ProductImages { get; set; }
         public DbSet<ProductTags> ProductTags { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         public DbSet<Color> Colors { get; set; }
         public DbSet<Size> Sizes { get; set; }
