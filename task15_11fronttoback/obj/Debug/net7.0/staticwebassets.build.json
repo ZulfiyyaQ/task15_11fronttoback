@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "MOYfuZi3vdgV11k9oVr1LcwLAAt7lgSrOFPOflZ7C8Q=",
+  "Hash": "z5SSw0fD9Sp8VHRnZeYshGfTwgmsauaE0mv2zp5M+JM=",
   "Source": "task15_11fronttoback",
   "BasePath": "_content/task15_11fronttoback",
   "Mode": "Default",
@@ -2633,6 +2633,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\slider\\inner-img\\1-2-524x617.png"
+    },
+    {
+      "Identity": "C:\\Users\\Asus\\Desktop\\task15_11fronttoback\\task15_11fronttoback\\wwwroot\\assets\\images\\slider\\photo_2023-09-18_18-49-44.jpg",
+      "SourceId": "task15_11fronttoback",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Asus\\Desktop\\task15_11fronttoback\\task15_11fronttoback\\wwwroot\\",
+      "BasePath": "_content/task15_11fronttoback",
+      "RelativePath": "assets/images/slider/photo_2023-09-18_18-49-44.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\slider\\photo_2023-09-18_18-49-44.jpg"
     },
     {
       "Identity": "C:\\Users\\Asus\\Desktop\\task15_11fronttoback\\task15_11fronttoback\\wwwroot\\assets\\images\\slider\\slide-img\\2-1-960x741.jpg",

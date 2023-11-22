@@ -18,7 +18,7 @@ namespace task15_11fronttoback.Controllers
         }
         public IActionResult Index()
         {
-            List<Slide> slides = _context.Slides.OrderBy(p => p.Id).ToList();
+            List<Slide> slides = _context.Slides.OrderBy(p => p.Order).ToList();
             List<Product> productList = _context.Products.Include(x => x.ProductImages).ToList();
 
             HomeVM vm = new HomeVM

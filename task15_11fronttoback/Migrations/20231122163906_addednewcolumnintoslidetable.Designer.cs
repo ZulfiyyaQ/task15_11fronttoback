@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using task15_11fronttoback.DAL;
 
@@ -11,9 +12,11 @@ using task15_11fronttoback.DAL;
 namespace task15_11fronttoback.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231122163906_addednewcolumnintoslidetable")]
+    partial class addednewcolumnintoslidetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,10 +214,10 @@ namespace task15_11fronttoback.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")
@@ -222,13 +225,11 @@ namespace task15_11fronttoback.Migrations
 
                     b.Property<string>("Subtitle")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -256,7 +257,7 @@ namespace task15_11fronttoback.Migrations
             modelBuilder.Entity("task15_11fronttoback.Models.Product", b =>
                 {
                     b.HasOne("task15_11fronttoback.Models.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -330,11 +331,6 @@ namespace task15_11fronttoback.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("task15_11fronttoback.Models.Category", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("task15_11fronttoback.Models.Color", b =>

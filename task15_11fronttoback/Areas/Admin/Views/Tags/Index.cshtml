@@ -1,4 +1,7 @@
 ﻿@model List<Tag>
+@{
+    int count = 0;
+}
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
@@ -34,10 +37,11 @@
                                 <tbody>
                                     @foreach (Tag item in Model)
                                     {
+                                        count++;
                                         <tr>
 
                                             <td>
-                                                @item.Id
+                                               @count
                                             </td>
                                             <td>
                                                 @item.Name
@@ -46,11 +50,11 @@
                                                 @item.ProductTags.Count
                                             </td>
                                             <td>
-                                                <a class="btn-sm btn btn-warning" asp-action="index" asp-controller="tags">
+                                                <a class="btn-sm btn btn-warning" asp-route-id="@item.Id"  asp-action="update" asp-controller="tags">
 
                                                     <i class="mdi mdi-auto-fix"></i>
                                                 </a>
-                                                <a class="btn-sm btn btn-danger" asp-action="index" asp-controller="tags">
+                                                <a class="btn-sm btn btn-danger" asp-route-id="@item.Id" asp-action="delete" asp-controller="tags">
                                                     <i class="mdi mdi-delete-variant"></i>
                                                 </a>
                                                 <a class="btn-sm btn btn-primary" asp-action="index" asp-controller="tags">
