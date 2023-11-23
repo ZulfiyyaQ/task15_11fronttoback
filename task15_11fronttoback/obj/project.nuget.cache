@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JZUMEdy7/Kq7myxqI23QmxiDZleqircsiA0vrKR/H/7e4stDz6k9VvpY/Tz4N2GedZgO/C0BJS0ZqORNbEvlXQ==",
+  "dgSpecHash": "BwlXM1BK0lN9aVnWimrFaIfdE9+LL/g8J7VbEHM99dfKBTY/57s9nQbUEDeaEefWRRDitOcYMWq7dHGV40bYoA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Asus\\Desktop\\task15_11fronttoback\\task15_11fronttoback\\task15_11fronttoback.csproj",
+  "projectFilePath": "C:\\Users\\Asus\\Desktop\\Pronia\\task15_11fronttoback\\task15_11fronttoback\\task15_11fronttoback.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Asus\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

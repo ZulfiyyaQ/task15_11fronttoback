@@ -28,13 +28,13 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
 
         [HttpPost]
-        
+
         public async Task<IActionResult> Create(Category categories)
         {
             if (!ModelState.IsValid) return View();
 
             bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == categories.Name.ToLower().Trim());
-            if(result)
+            if (result)
             {
                 ModelState.AddModelError("Name", "Bele category artiq movcutdur");
                 return View();
@@ -60,12 +60,12 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
                 return View();
             }
 
-            Category existed = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id );
+            Category existed = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
             if (existed is null) return NotFound();
             bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == category.Name.ToLower().Trim() && c.Id != id);
             if (result)
             {
-                ModelState.AddModelError("Name", "Category already exists");
+                ModelState.AddModelError("Name", "Bele category artiq movcutdur");
                 return View();
             }
             existed.Name = category.Name;
@@ -94,6 +94,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var category = await _context.Categories.Include(c => c.Products).ThenInclude(p => p.ProductImages).FirstOrDefaultAsync(pi => pi.Id == id);
+            if (category is null) return NotFound();
             return View(category);
         }
 

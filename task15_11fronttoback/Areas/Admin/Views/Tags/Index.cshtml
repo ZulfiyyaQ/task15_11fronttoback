@@ -57,7 +57,7 @@
                                                 <a class="btn-sm btn btn-danger" asp-route-id="@item.Id" asp-action="delete" asp-controller="tags">
                                                     <i class="mdi mdi-delete-variant"></i>
                                                 </a>
-                                                <a class="btn-sm btn btn-primary" asp-action="index" asp-controller="tags">
+                                                <a class="btn-sm btn btn-primary" asp-route-id="@item.Id" asp-action="detail" asp-controller="tags">
                                                     <i class="mdi mdi-book-open-page-variant"></i>
                                                 </a>
                                             </td>

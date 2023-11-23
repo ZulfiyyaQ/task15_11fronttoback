@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow.CopyAnalysis;
 using Microsoft.EntityFrameworkCore;
 using task15_11fronttoback.DAL;
 using task15_11fronttoback.Models;
-
+using task15_11fronttoback.Utilities.Extensions;
 
 namespace task15_11fronttoback.Areas.Admin.Controllers
 {
@@ -13,10 +13,12 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
     {
 
         private readonly AppDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public SlidesController(AppDbContext context)
+        public SlidesController(AppDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
         public async Task<IActionResult> Index()
         {
@@ -36,34 +38,103 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             {
                 return View();
             }
-            
 
-            bool result = _context.Slides.Any(s => s.Order < 0);
-            if (result)
+            //bool result = _context.Slides.Any(s => s.Title.ToLower().Trim() == slide.Title.ToLower().Trim());
+            //if (result)
+            //{
+            //    ModelState.AddModelError("Name", "Slide already exists");
+            //    return View();
+            //}
+
+            if (slide.Photo is null)
             {
-                ModelState.AddModelError("Order", "Order 0 dan asagi ola bilmez");
+                ModelState.AddModelError("Photo", "File secilmesi mutleqdir");
                 return View();
             }
-            if (!slide.Photo.ContentType.Contains("image"))
+            if (!slide.Photo.ValidateType())
             {
-                ModelState.AddModelError("Photo", "File Secmeyiniz mutleqdir");
+                ModelState.AddModelError("Photo", "Sekil file secmeyiniz mutleqdir");
                 return View();
             }
-            if (slide.Photo.Length > 2 * 1024 * 1024)
+            if (!slide.Photo.ValidateSize(2 * 1024))
             {
-                ModelState.AddModelError("Photo", "Sekil 2 mb dan cox ola bilmez");
+                ModelState.AddModelError("Photo", "Sekil olcusu 2 mb dan artiq olmamalidir");
                 return View();
             }
 
-            string currentdirectory = Directory.GetCurrentDirectory();
 
-            using (FileStream file = new FileStream(@$"{currentdirectory}/wwwroot/assets/images/slider/{slide.Photo.FileName}", FileMode.Create))
-            {
-                await slide.Photo.CopyToAsync(file);
-            }
+            slide.ImageUrl = await slide.Photo.CreateFile(_env.WebRootPath, "assets", "images","website-images");
 
-            slide.ImageUrl = slide.Photo.FileName;
             await _context.Slides.AddAsync(slide);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        public async Task<IActionResult> Update(int id)
+        {
+            if (id <= 0) return BadRequest();
+
+            Slide slide = await _context.Slides.FirstOrDefaultAsync(s => s.Id == id);
+
+            if (slide is null) return NotFound();
+
+            return View(slide) ;
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, Slide slide)
+        {
+            Slide existed = await _context.Slides.FirstOrDefaultAsync(s => s.Id == id);
+            if (existed is null) return NotFound();
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            if (slide.Photo is not null)
+            {
+                //bool result = _context.Slides.Any(s => s.Title== slide.Title && s.Id != id);
+                //if (result)
+                //{
+                //    ModelState.AddModelError("Name", "Slide already exists");
+                //    return View(existed);
+                //}
+
+                if (!slide.Photo.ValidateType())
+                {
+                    ModelState.AddModelError("Photo", "Sekil file secmeyiniz mutleqdir");
+                    return View(existed);
+                }
+                if (!slide.Photo.ValidateSize(2 * 1024))
+                {
+                    ModelState.AddModelError("Photo", "Sekil olcusu 2 mb dan artiq olmamalidir");
+                    return View(existed);
+                }
+                string newimage = await slide.Photo.CreateFile(_env.WebRootPath, "assets", "images", "website-images");
+                existed.ImageUrl.DeleteFile(_env.WebRootPath, "assets", "images", "website-images");
+                existed.ImageUrl = newimage;
+            }
+
+            existed.Title = slide.Title;
+
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id <= 0) return BadRequest();
+            Slide slide = await _context.Slides.FirstOrDefaultAsync(s => s.Id == id);
+            if (slide is null) return NotFound();
+
+            slide.ImageUrl.DeleteFile(_env.WebRootPath, "assets", "images", "website-images");
+
+            _context.Slides.Remove(slide);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

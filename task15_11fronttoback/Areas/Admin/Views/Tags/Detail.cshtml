@@ -1,0 +1,33 @@
+﻿@model Tag
+
+<div class="card" >
+    <h5 class="card-header">Sizes</h5>
+    <div class="card-body">
+        <h4 class="card-title">@Model.Name</h4>
+        <div class="container-md">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach (var item in Model.ProductTags)
+                {
+                    var product = item.Product;
+                    <div class="col">
+                        <div class="card">
+                            @* <img src="~/assets/images/website-images/@product.ProductImages.FirstOrDefault(img => img.ProductId == item.Id && img.IsPrimary == true).Url" class="card-img-top" alt="..."> *@
+                            <div class="card-body">
+                                <h5 class="card-title">@product.Name</h5>
+                                <h6 class="card-text">@product.Description</h6>
+                                <p class="card-text">Price: $@product.Price</p>
+                                <p class="card-text">SKU: @product.SKU</p>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+
+
+

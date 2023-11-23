@@ -9,89 +9,129 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = task15_11fronttoback
 build_property.RootNamespace = task15_11fronttoback
-build_property.ProjectDir = C:\Users\Asus\Desktop\task15_11fronttoback\task15_11fronttoback\
+build_property.ProjectDir = C:\Users\Asus\Desktop\Pronia\task15_11fronttoback\task15_11fronttoback\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Asus\Desktop\task15_11fronttoback\task15_11fronttoback
+build_property.MSBuildProjectDirectory = C:\Users\Asus\Desktop\Pronia\task15_11fronttoback\task15_11fronttoback
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Categories/Create.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Categories/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2F0ZWdvcmllc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Categories/Detail.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Categories/Detail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2F0ZWdvcmllc1xEZXRhaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Categories/Index.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Categories/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2F0ZWdvcmllc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Categories/Update.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Categories/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2F0ZWdvcmllc1xVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Home/Index.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Colors/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ29sb3JzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Colors/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ29sb3JzXERldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Colors/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ29sb3JzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Colors/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ29sb3JzXFVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Shared/_Layout.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Slides/Create.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Sizes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2l6ZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Sizes/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2l6ZXNcRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Sizes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2l6ZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Sizes/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2l6ZXNcVXBkYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Slides/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2xpZGVzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Slides/Detail.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Slides/Detail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2xpZGVzXERldGFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Slides/Index.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Slides/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2xpZGVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Tags/Create.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Slides/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2xpZGVzXFVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Tags/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGFnc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Tags/Index.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Tags/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGFnc1xEZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Tags/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGFnc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Tags/Update.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/Tags/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGFnc1xVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/_ViewImports.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/_ViewStart.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Areas/Admin/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Views/Home/About.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Views/Home/About.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Views/Home/Index.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Views/Products/Details.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Views/Products/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Views/Shared/_Layout.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Views/_ViewImports.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Asus/Desktop/task15_11fronttoback/task15_11fronttoback/Views/_ViewStart.cshtml]
+[C:/Users/Asus/Desktop/Pronia/task15_11fronttoback/task15_11fronttoback/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

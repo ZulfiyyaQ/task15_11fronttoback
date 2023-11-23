@@ -39,7 +39,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tag.Name.ToLower().Trim());
             if (result)
             {
-                ModelState.AddModelError("Name", "Tag already exists");
+                ModelState.AddModelError("Name", "Bele Tag artiq mocvutdur");
                 return View();
             }
             await _context.Tags.AddAsync(tag);
@@ -65,7 +65,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tag.Name.ToLower().Trim() && t.Id != id);
             if (result)
             {
-                ModelState.AddModelError("Name", "Category already exists");
+                ModelState.AddModelError("Name", "Bele Tag artiq movcutdur");
                 return View();
             }
             existed.Name = tag.Name;
@@ -88,8 +88,12 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
 
-
-
+        }
+        public async Task<IActionResult> Detail(int id)
+        {
+            var tag = await _context.Tags.Include(c => c.ProductTags).ThenInclude(p => p.Product)/*.ThenInclude(p => p.ProductImages)*/.FirstOrDefaultAsync(pi => pi.Id == id);
+            if (tag is null) return NotFound();
+            return View(tag);
         }
 
     }
