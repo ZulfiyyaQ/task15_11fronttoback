@@ -1,4 +1,7 @@
-﻿namespace task15_11fronttoback.Utilities.Extensions
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Metadata;
+
+namespace task15_11fronttoback.Utilities.Extensions
 {
     public static class FileValidator
     {
@@ -22,15 +25,11 @@
 
 
 
-        public static async Task<string> CreateFile(this IFormFile file, string root, params string[] folders)
+        public static async Task<string> CreateFile(this IFormFile file, params string[] folders)
         {
-            string filename = Guid.NewGuid().ToString() + file.FileName;
-            string path = root;
+            string filename = file.GenerateName();
 
-            for (int i = 0; i < folders.Length; i++)
-            {
-                path = Path.Combine(path, folders[i]);
-            }
+            string path = folders.Aggregate(Path.Combine);
 
             path = Path.Combine(path, filename);
 
@@ -57,6 +56,13 @@
             {
                 File.Delete(path);
             }
+        }
+
+        public static string GenerateName(this IFormFile file)
+        {
+            int index = file.FileName.LastIndexOf(',');
+            string filename = Guid.NewGuid().ToString() + file.FileName.Substring(index);
+            return filename;
         }
     }
 }
