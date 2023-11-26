@@ -8,9 +8,9 @@
                         <h1 class="card-title">Create Product</h1>
                         <form class="forms-sample" method="post" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label asp-fot="Name">Name</label>
-                                <input asp-fot="Name" class="form-control" placeholder="Name">
-                                <span class="text-danger" asp-validation-fot="Name"></span>
+                                <label asp-for="Name">Name</label>
+                                <input asp-for="Name" class="form-control" placeholder="Name">
+                                <span class="text-danger" asp-validation-for="Name"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Price">Price</label>
@@ -39,7 +39,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary me-2">Submit</button>
-                            <button asp-action="index" asp-controller="slides" class="btn btn-danger">Cancel</button>
+                            <button asp-action="index" asp-controller="products" class="btn btn-danger">Cancel</button>
                         </form>
                     </div>
                 </div>

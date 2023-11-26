@@ -45,6 +45,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             {
                 ViewBag.Categories = await _context.Categories.ToListAsync();
                 ModelState.AddModelError("CategoryId", "Bele Id li category movcud deyil");
+                ViewBag.Categories = await _context.Categories.ToListAsync();
                 return View();
             }
             Product product = new Product
@@ -63,23 +64,6 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             //return View();
 
         }
-        //public async Task<IActionResult> Update(int id)
-        //{
-        //    if (id <= 0) return BadRequest();
-        //    Product existed = await _context.Products.FirstOrDefaultAsync(c => c.Id == id);
-        //    if (existed is null)  return NotFound(); 
-        //    return View();
-        //    UpdateProductVM productvm = new UpdateProductVM 
-        //    {
-        //        Name = existed.Name,
-        //        Price = existed.Price,
-        //        SKU = existed.SKU,
-        //        CategoryId = (int)existed.CategoryId,
-        //        Description = existed.Description
-        //    };
-        //    return View(productvm);
-
-        //}
         public async Task<IActionResult> Update(int id)
         {
             if (id <= 0) return BadRequest();
@@ -94,7 +78,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
                 SKU = existed.SKU,
                 CategoryId = (int)existed.CategoryId
             };
-
+            ViewBag.Categories = await _context.Categories.ToListAsync();
             return View(productVM);
         }
 
@@ -115,7 +99,8 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             {
                 ViewBag.Categories = await _context.Categories.ToListAsync();
                 ModelState.AddModelError("Name", "Product already exists");
-                return View(productVM);
+                ViewBag.Categories = await _context.Categories.ToListAsync();
+                return View();
             }
 
             bool result1 = await _context.Categories.AnyAsync(c => c.Id == productVM.CategoryId);
@@ -123,45 +108,22 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             {
                 ViewBag.Categories = await _context.Categories.ToListAsync();
                 ModelState.AddModelError("CategoryId", "Category not found, choose another one.");
-                return View(productVM);
+                ViewBag.Categories = await _context.Categories.ToListAsync();
+                return View();
             }
 
-            Product product = new Product
-            {
-                Name = productVM.Name,
-                Price = productVM.Price,
-                SKU = productVM.SKU,
-                CategoryId = (int)productVM.CategoryId,
-                Description = productVM.Description
-            };
 
-            await _context.Products.AddAsync(product);
+            existed.Name = productVM.Name;
+            existed.Price = productVM.Price;
+            existed.SKU = productVM.SKU;
+            existed.CategoryId = (int)productVM.CategoryId;
+            existed.Description = productVM.Description;
+
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        //[HttpPost]
-        //public async Task<IActionResult> Update(int id, UpdateProductVM productvm)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View();
-        //    }
 
-        //    Product existed = await _context.Products.FirstOrDefaultAsync(c => c.Id == id);
-        //    if (existed is null) return NotFound();
-        //    bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == productvm.Name.ToLower().Trim() && c.Id != id);
-        //    if (result)
-        //    {
-        //        ModelState.AddModelError("Name", "Bele product artiq movcutdur");
-        //        return View();
-        //    }
-
-        //    existed.Name = productvm.Name;
-        //    await _context.SaveChangesAsync();
-
-        //    return RedirectToAction(nameof(Index));
-
-        //}
 
     }
 }
