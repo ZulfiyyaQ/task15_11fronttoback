@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using task15_11fronttoback.Areas.Admin.ViewModels;
 using task15_11fronttoback.DAL;
 using task15_11fronttoback.Models;
 
@@ -28,16 +29,20 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> Create(Color color)
+        public async Task<IActionResult> Create(CreateColorsVM colorvm)
         {
             if (!ModelState.IsValid) return View();
 
-            bool result = _context.Colors.Any(c => c.Name.ToLower().Trim() == color.Name.ToLower().Trim());
+            bool result = _context.Colors.Any(c => c.Name.ToLower().Trim() == colorvm.Name.ToLower().Trim());
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele reng artiq movcutdur");
                 return View();
             }
+            Color color = new Color
+            { 
+                Name=colorvm.Name
+            };
 
             await _context.Colors.AddAsync(color);
             await _context.SaveChangesAsync();
@@ -52,7 +57,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Color color)
+        public async Task<IActionResult> Update(int id, UpdateColorsVM colorvm)
         {
             if (!ModelState.IsValid)
             {
@@ -61,13 +66,13 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
          Color existed = await _context.Colors.FirstOrDefaultAsync(c => c.Id == id);
             if (existed is null) return NotFound();
-            bool result = _context.Colors.Any(c => c.Name.ToLower().Trim() == color.Name.ToLower().Trim() && c.Id != id);
+            bool result = _context.Colors.Any(c => c.Name.ToLower().Trim() == colorvm.Name.ToLower().Trim() && c.Id != id);
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele reng artiq movcutdur");
                 return View();
             }
-            existed.Name = color.Name;
+            existed.Name = colorvm.Name;
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

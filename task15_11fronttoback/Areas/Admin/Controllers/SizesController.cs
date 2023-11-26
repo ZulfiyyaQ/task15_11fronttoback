@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using task15_11fronttoback.Areas.Admin.ViewModels;
 using task15_11fronttoback.DAL;
 using task15_11fronttoback.Models;
 
@@ -29,17 +30,20 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> Create(Size size)
+        public async Task<IActionResult> Create(CreateSizesVM sizevm)
         {
             if (!ModelState.IsValid) return View();
 
-            bool result = _context.Sizes.Any(c => c.Name.ToLower().Trim() == size.Name.ToLower().Trim());
+            bool result = _context.Sizes.Any(c => c.Name.ToLower().Trim() == sizevm.Name.ToLower().Trim());
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele size artiq movcutdur");
                 return View();
             }
-
+            Size size = new Size 
+            {
+                Name=sizevm.Name
+            };
             await _context.Sizes.AddAsync(size);
             await _context.SaveChangesAsync();
 
@@ -53,7 +57,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Size size)
+        public async Task<IActionResult> Update(int id, UpdateSizesVM sizevm)
         {
             if (!ModelState.IsValid)
             {
@@ -62,13 +66,13 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
             Size existed = await _context.Sizes.FirstOrDefaultAsync(c => c.Id == id);
             if (existed is null) return NotFound();
-            bool result = _context.Sizes.Any(c => c.Name.ToLower().Trim() == size.Name.ToLower().Trim() && c.Id != id);
+            bool result = _context.Sizes.Any(c => c.Name.ToLower().Trim() == sizevm.Name.ToLower().Trim() && c.Id != id);
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele size artiq movcutdur");
                 return View();
             }
-            existed.Name = size.Name;
+            existed.Name = sizevm.Name;
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

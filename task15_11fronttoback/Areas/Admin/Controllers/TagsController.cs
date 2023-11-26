@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using task15_11fronttoback.Areas.Admin.ViewModels;
 using task15_11fronttoback.DAL;
 using task15_11fronttoback.Models;
 
@@ -29,19 +30,24 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Tag tag)
+        public async Task<IActionResult> Create(CreateTagsVM tagvm)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tag.Name.ToLower().Trim());
+            bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tagvm.Name.ToLower().Trim());
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele Tag artiq mocvutdur");
                 return View();
             }
+
+            Tag tag = new Tag 
+            { 
+                Name=tagvm.Name
+            };
             await _context.Tags.AddAsync(tag);
             await _context.SaveChangesAsync();
 
@@ -53,7 +59,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Tag tag)
+        public async Task<IActionResult> Update(int id, UpdateTagsVM tagvm)
         {
             if (!ModelState.IsValid)
             {
@@ -62,13 +68,13 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
             Tag existed = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
             if (existed is null) return NotFound();
-            bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tag.Name.ToLower().Trim() && t.Id != id);
+            bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tagvm.Name.ToLower().Trim() && t.Id != id);
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele Tag artiq movcutdur");
                 return View();
             }
-            existed.Name = tag.Name;
+            existed.Name = tagvm.Name;
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

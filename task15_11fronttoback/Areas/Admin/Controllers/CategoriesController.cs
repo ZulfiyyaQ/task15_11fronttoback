@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using task15_11fronttoback.Areas.Admin.ViewModels;
 using task15_11fronttoback.DAL;
 using task15_11fronttoback.Models;
+using task15_11fronttoback.ViewModels;
 
 namespace task15_11fronttoback.Areas.Admin.Controllers
 {
@@ -29,18 +31,22 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> Create(Category categories)
+        public async Task<IActionResult> Create(CreateCategoriesVM categoryvm)
         {
             if (!ModelState.IsValid) return View();
 
-            bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == categories.Name.ToLower().Trim());
+            bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == categoryvm.Name.ToLower().Trim());
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele category artiq movcutdur");
                 return View();
             }
 
-            await _context.Categories.AddAsync(categories);
+            Category category = new Category
+            {
+                Name = categoryvm.Name
+            };
+            await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
@@ -53,7 +59,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Category category)
+        public async Task<IActionResult> Update(int id, UpdateCategoriesVM categoryvm)
         {
             if (!ModelState.IsValid)
             {
@@ -62,13 +68,14 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
             Category existed = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
             if (existed is null) return NotFound();
-            bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == category.Name.ToLower().Trim() && c.Id != id);
+            bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == categoryvm.Name.ToLower().Trim() && c.Id != id);
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele category artiq movcutdur");
                 return View();
             }
-            existed.Name = category.Name;
+
+            existed.Name = categoryvm.Name;
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

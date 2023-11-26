@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "osxhUJs/CeDVlqjqHN/V8Q2am+3VN+PFdeE3xBlu/TA=",
+  "Hash": "iUQGlkn94I4JB0DQrZE8ZBx3Hou29ctbTUj8qZH3SVo=",
   "Source": "task15_11fronttoback",
   "BasePath": "_content/task15_11fronttoback",
   "Mode": "Default",
@@ -1936,6 +1936,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\footer\\bg\\1-1920x465.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Asus\\Desktop\\Pronia\\task15_11fronttoback\\task15_11fronttoback\\wwwroot\\assets\\images\\logo\\2.PNG",
+      "SourceId": "task15_11fronttoback",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Asus\\Desktop\\Pronia\\task15_11fronttoback\\task15_11fronttoback\\wwwroot\\",
+      "BasePath": "_content/task15_11fronttoback",
+      "RelativePath": "assets/images/logo/2.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\logo\\2.PNG"
     },
     {
       "Identity": "C:\\Users\\Asus\\Desktop\\Pronia\\task15_11fronttoback\\task15_11fronttoback\\wwwroot\\assets\\images\\logo\\dark.png",
