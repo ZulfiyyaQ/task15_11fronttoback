@@ -30,12 +30,10 @@
                             <div class="form-group">
                                 <label asp-for="CategoryId"> Category </label>
 
+                            
                                 <select asp-for="CategoryId" asp-items="new SelectList(ViewBag.Categories,nameof(Category.Id),nameof(Category.Name))" class="form-control">
-                                    <option selected disabled>Choose category</option>
-                                </select>
-                                @* <select asp-for="CategoryId" asp-items="new SelectList(ViewBag.Categories,nameof(Category.Id),nameof(Category.Name))" class="form-control">
                                     <option selected disabled>Choose Category </option>
-                                </select> *@
+                                </select>
 
                                 <span class="text-danger" asp-validation-for="CategoryId">  </span>
                             </div>
