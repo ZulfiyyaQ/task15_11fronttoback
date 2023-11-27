@@ -1256,10 +1256,10 @@
                                         <div class="product-img">
                                             <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">
                                                 <img class="primary-img"
-                                                     src="~/assets/images/website-images/@product.ProductImages.FirstOrDefault(img=>img.ProductId==product.Id && img.IsPrimary==true).Url"
+                                                     src="~/assets/images/website-images/@product.ProductImages.FirstOrDefault(img=>img.ProductId==product.Id && img.IsPrimary==true)?.Url"
                                                      alt="Product Images" />
                                                 <img class="secondary-img"
-                                                     src="~/assets/images/website-images/@product.ProductImages.FirstOrDefault(img=>img.ProductId==product.Id && img.IsPrimary==false).Url"
+                                                     src="~/assets/images/website-images/@product.ProductImages.FirstOrDefault(img=>img.ProductId==product.Id && img.IsPrimary==false)?.Url"
                                                      alt="Product Images" />
                                             </a>
                                             <div class="product-add-action">
@@ -1429,10 +1429,10 @@
                                 <div class="product-img">
                                     <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">
                                         <img style="width: 250px; height: 250px; object-fit: cover;" class="primary-img"
-                                             src="~/assets/images/website-images/@product.ProductImages.FirstOrDefault(img=>img.ProductId==product.Id && img.IsPrimary==true).Url"
+                                             src="~/assets/images/website-images/@product.ProductImages.FirstOrDefault(img=>img.ProductId==product.Id && img.IsPrimary==true)?.Url"
                                              alt="Product Images" />
                                         <img style="width: 250px; height: 250px; object-fit: cover;" class="secondary-img"
-                                             src="~/assets/images/website-images/@product.ProductImages.FirstOrDefault(img=>img.ProductId==product.Id && img.IsPrimary==false).Url"
+                                             src="~/assets/images/website-images/@product.ProductImages.FirstOrDefault(img=>img.ProductId==product.Id && img.IsPrimary==false)?.Url"
                                              alt="Product Images" />
                                     </a>
                                     <div class="product-add-action">
