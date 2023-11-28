@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Metadata;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using task15_11fronttoback.Models;
 
@@ -11,6 +13,9 @@ namespace task15_11fronttoback.Areas.Admin.ViewModels
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string SKU { get; set; }
+        public IFormFile MainPhoto { get; set; }
+        public IFormFile HoverPhoto { get; set; }
+        public List<IFormFile>? Photos { get; set; }
         [Required]
         public int? CategoryId { get; set; }
         public List<int>? TagIds { get; set; }

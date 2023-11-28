@@ -8,6 +8,21 @@
                         <h1 class="card-title">Create Product</h1>
                         <form class="forms-sample" method="post" enctype="multipart/form-data">
                             <div class="form-group">
+                                <label asp-for="MainPhoto">Main Photo</label>
+                                <input asp-for="MainPhoto" class="form-control" accept="image/*">
+                                <span class="text-danger" asp-validation-for="MainPhoto"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HoverPhoto">Hover Photo</label>
+                                <input  asp-for="HoverPhoto" class="form-control" accept="image/*">
+                                <span class="text-danger" asp-validation-for="HoverPhoto"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Photos">Additional Photos</label>
+                                <input  asp-for="Photos" class="form-control" accept="image/*">
+                                <span class="text-danger" asp-validation-for="Photos"></span>
+                            </div>
+                            <div class="form-group">
                                 <label asp-for="Name">Name</label>
                                 <input asp-for="Name" class="form-control" placeholder="Name">
                                 <span class="text-danger" asp-validation-for="Name"></span>

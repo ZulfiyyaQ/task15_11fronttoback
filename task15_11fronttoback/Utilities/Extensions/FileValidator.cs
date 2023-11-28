@@ -60,7 +60,7 @@ namespace task15_11fronttoback.Utilities.Extensions
 
         public static string GenerateName(this IFormFile file)
         {
-            int index = file.FileName.LastIndexOf(',');
+            int index = file.FileName.LastIndexOf('.');
             string filename = Guid.NewGuid().ToString() + file.FileName.Substring(index);
             return filename;
         }
