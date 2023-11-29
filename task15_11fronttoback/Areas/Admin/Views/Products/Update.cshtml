@@ -1,4 +1,9 @@
-﻿@model UpdateProductVM
+﻿@{
+    ProductImg main = Model.ProductImages.FirstOrDefault(pi => pi.IsPrimary == true);
+    ProductImg hover = Model.ProductImages.FirstOrDefault(pi => pi.IsPrimary == false);
+}
+@model UpdateProductVM
+
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
@@ -11,6 +16,43 @@
                                 <label asp-for="Name">Name</label>
                                 <input asp-for="Name" class="form-control" placeholder="Name">
                                 <span class="text-danger" asp-validation-for="Name"></span>
+                            </div>
+                            <div class="form-group ">
+
+                                <img style="width:150px;height:150px" src="~/assets/images/website-images/@main.Url" />
+                                <button type="button" class="btn btn-danger position-absolute">X</button>
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MainPhoto">Main Photo</label>
+                                <input asp-for="MainPhoto" class="form-control" accept="image/*">
+                                <span class="text-danger" asp-validation-for="MainPhoto"></span>
+                            </div>
+                            <div class="form-group  ">
+
+                                <img style="width:150px;height:150px" src="~/assets/images/website-images/@hover.Url" />
+                                <button type="button" class="btn btn-danger position-absolute">X</button>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HoverPhoto">Hover Photo</label>
+                                <input asp-for="HoverPhoto" class="form-control" accept="image/*">
+                                <span class="text-danger" asp-validation-for="HoverPhoto"></span>
+                            </div>
+                            <div class="form-group d-flex">
+                                @foreach (ProductImg image in Model.ProductImages.Where(pi => pi.IsPrimary == null))
+                                {
+                                    <div class="position-relative">
+                                        <img style="width:150px;height:150px" src="~/assets/images/website-images/@image.Url" />
+                                        <button type="button" style="right:0" class="cus-delete btn btn-danger position-absolute">X</button>
+                                        <input asp-for="ImageIds" type="hidden" value="@image.Id">
+                                    </div>
+
+                                }
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Photos">Additional Photos</label>
+                                <input asp-for="Photos" class="form-control" accept="image/*">
+                                <span class="text-danger" asp-validation-for="Photos"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Price">Price</label>
@@ -30,9 +72,8 @@
                             <div class="form-group">
                                 <label asp-for="CategoryId"> Category </label>
 
-                            
+
                                 <select asp-for="CategoryId" asp-items="new SelectList(Model.Categories,nameof(Category.Id),nameof(Category.Name))" class="form-control">
-                                    
                                 </select>
 
                                 <span class="text-danger" asp-validation-for="CategoryId">  </span>
@@ -74,6 +115,19 @@
         </div>
     </div>
 </div>
+
+@section DeleteImages
+    {
+    <script>
+        var btns = document.querySelectorAll(".cus-delete")
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                btns[i].parentElement.remove();
+            })
+        }
+
+    </script>
+}
 
 
 

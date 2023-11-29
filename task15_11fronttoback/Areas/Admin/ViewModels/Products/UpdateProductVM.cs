@@ -12,6 +12,10 @@ namespace task15_11fronttoback.Areas.Admin.ViewModels
         public string SKU { get; set; }
         [Required]
         public int? CategoryId { get; set; }
+        public IFormFile? MainPhoto { get; set; }
+        public IFormFile? HoverPhoto { get; set; }
+        public List<IFormFile>? Photos { get; set; }
+        public List<int>? ImageIds { get; set; }
         public List<int>  TagsId{ get; set; }
         public List<int> ColorsId { get; set; }
         public List<int> SizesId { get; set; }
@@ -19,6 +23,9 @@ namespace task15_11fronttoback.Areas.Admin.ViewModels
         public List<Tag>? Tags { get; set; }
         public List<Color>? Colors { get; set; }
         public List<Size>? Sizes { get; set; }
+
+        public List<ProductImg>? ProductImages { get; set; }
+        
 
     }
 }

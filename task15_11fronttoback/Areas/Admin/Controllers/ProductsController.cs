@@ -169,7 +169,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
         public async Task<IActionResult> Update(int id)
         {
             if (id <= 0) return BadRequest();
-            Product existed = await _context.Products.Include(pt => pt.ProductTags)
+            Product existed = await _context.Products.Include(p => p.ProductImages).Include(pt => pt.ProductTags)
                 .Include(pc => pc.ProductColors)
                 .Include(ps => ps.ProductSizes)
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -188,7 +188,8 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
                 ColorsId = existed.ProductColors.Select(pc => pc.ColorId).ToList(),
                 Colors = await _context.Colors.ToListAsync(),
                 SizesId = existed.ProductSizes.Select(pc => pc.SizeId).ToList(),
-                Sizes = await _context.Sizes.ToListAsync()
+                Sizes = await _context.Sizes.ToListAsync(),
+                ProductImages = existed.ProductImages
             };
 
             return View(productVM);
@@ -197,6 +198,11 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(int id, UpdateProductVM productVM)
         {
+            Product existed = await _context.Products.Include(pi => pi.ProductImages).Include(p => p.ProductTags)
+                .Include(pc => pc.ProductColors)
+                .Include(ps => ps.ProductSizes)
+                .FirstOrDefaultAsync(e => e.Id == id);
+            productVM.ProductImages = existed.ProductImages;
             if (!ModelState.IsValid)
             {
                 productVM.Categories = await _context.Categories.ToListAsync();
@@ -206,12 +212,9 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
                 return View(productVM);
             }
 
-            Product existed = await _context.Products.Include(p => p.ProductTags)
-                .Include(pc => pc.ProductColors)
-                .Include(ps => ps.ProductSizes)
-                .FirstOrDefaultAsync(e => e.Id == id);
 
             if (existed is null) return NotFound();
+
 
             bool result = _context.Products.Any(c => c.Name == productVM.Name && c.Id != id);
             if (result)
@@ -221,7 +224,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
                 productVM.Colors = await _context.Colors.ToListAsync();
                 productVM.Sizes = await _context.Sizes.ToListAsync();
                 ModelState.AddModelError("Name", "Product already exists");
-                return View();
+                return View(productVM);
             }
 
 
@@ -233,10 +236,84 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
                 productVM.Colors = await _context.Colors.ToListAsync();
                 productVM.Sizes = await _context.Sizes.ToListAsync();
                 ModelState.AddModelError("CategoryId", "Category not found, choose another one.");
-                return View();
+                return View(productVM);
             }
-            List<int> existedIds = new List<int>();
 
+            if (productVM.MainPhoto is not null)
+            {
+                if (!productVM.MainPhoto.ValidateType("image/"))
+                {
+                    productVM.Categories = await _context.Categories.ToListAsync();
+                    productVM.Tags = await _context.Tags.ToListAsync();
+                    productVM.Colors = await _context.Colors.ToListAsync();
+                    productVM.Sizes = await _context.Sizes.ToListAsync();
+                    ModelState.AddModelError("MainPhoto", "Tipi uygun deyil");
+                    return View(productVM);
+                }
+                if (!productVM.MainPhoto.ValidateSize(600))
+                {
+                    productVM.Categories = await _context.Categories.ToListAsync();
+                    productVM.Tags = await _context.Tags.ToListAsync();
+                    productVM.Colors = await _context.Colors.ToListAsync();
+                    productVM.Sizes = await _context.Sizes.ToListAsync();
+                    ModelState.AddModelError("MainPhoto", "Olcusu uygun deyil");
+                    return View(productVM);
+                }
+
+            }
+            if (productVM.HoverPhoto is not null)
+            {
+                if (!productVM.HoverPhoto.ValidateType("image/"))
+                {
+                    productVM.Categories = await _context.Categories.ToListAsync();
+                    productVM.Tags = await _context.Tags.ToListAsync();
+                    productVM.Colors = await _context.Colors.ToListAsync();
+                    productVM.Sizes = await _context.Sizes.ToListAsync();
+                    ModelState.AddModelError("HoverPhoto", "Tipi uygun deyil");
+                    return View(productVM);
+                }
+                if (!productVM.HoverPhoto.ValidateSize(600))
+                {
+                    productVM.Categories = await _context.Categories.ToListAsync();
+                    productVM.Tags = await _context.Tags.ToListAsync();
+                    productVM.Colors = await _context.Colors.ToListAsync();
+                    productVM.Sizes = await _context.Sizes.ToListAsync();
+                    ModelState.AddModelError("HoverPhoto", "Olcusu uygun deyil");
+                    return View(productVM);
+                }
+
+            }
+            if (productVM.MainPhoto is not null)
+            {
+                string fileName = await productVM.MainPhoto.CreateFile(_env.WebRootPath, "assets", "images", "website-images");
+
+                ProductImg mainImage = existed.ProductImages.FirstOrDefault(pi => pi.IsPrimary == true);
+                mainImage.Url.DeleteFile(_env.WebRootPath, "assets", "images", "website-images");
+                _context.ProductImages.Remove(mainImage);
+
+                existed.ProductImages.Add(new ProductImg
+                {
+                    IsPrimary = true,
+                    Url = fileName
+                });
+            }
+            if (productVM.HoverPhoto is not null)
+            {
+                string fileName = await productVM.HoverPhoto.CreateFile(_env.WebRootPath, "assets", "images", "website-images");
+
+                ProductImg hoverImage = existed.ProductImages.FirstOrDefault(pi => pi.IsPrimary == false);
+                hoverImage.Url.DeleteFile(_env.WebRootPath, "assets", "images", "website-images");
+                _context.ProductImages.Remove(hoverImage);
+
+                existed.ProductImages.Add(new ProductImg
+                {
+                    IsPrimary = false,
+                    Url = fileName
+                });
+            }
+
+
+            List<int> existedIds = new List<int>();
 
             //List<ProductTags> removeable = existed.ProductTags.Where(pt => !productVM.TagsId.Exists(tId => tId == pt.TagId)).ToList();
             //_context.ProductTags.RemoveRange(removeable);
@@ -245,6 +322,19 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             //{
             //    if (productVM.TagsId.Exists(tId => tId == protag.TagId)) { _context.ProductTags.Remove(protag); }
             //}
+
+            if (productVM.ImageIds is null)
+            {
+                productVM.ImageIds = new List<int>();
+            }
+
+            List<ProductImg> removeable = existed.ProductImages.Where(pi => !productVM.ImageIds.Exists(imgId => imgId == pi.Id) && pi.IsPrimary == null).ToList();
+            foreach (ProductImg pImage in removeable)
+            {
+                pImage.Url.DeleteFile(_env.WebRootPath, "assets", "images", "website-images");
+                existed.ProductImages.Remove(pImage);
+            }
+
 
             existed.ProductTags.RemoveAll(pt => !productVM.TagsId.Exists(tId => tId == pt.TagId));
 
@@ -259,7 +349,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
                     productVM.Tags = await _context.Tags.ToListAsync();
                     productVM.Colors = await _context.Colors.ToListAsync();
                     productVM.Sizes = await _context.Sizes.ToListAsync();
-                    ModelState.AddModelError("TagIds", "Category not found, choose another one.");
+                    ModelState.AddModelError("TagIds", "Tag not found, choose another one.");
                     return View();
 
                 }
@@ -302,6 +392,31 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
                 }
             }
 
+            TempData["Message"] = "";
+            if (productVM.Photos is not null)
+            {
+                foreach (var photo in productVM.Photos)
+                {
+                    if (!photo.ValidateType("image/"))
+                    {
+                        TempData["Message"] += $"<p class=\"text-danger\">{photo.FileName} file tipi uygun deyil  </p>";
+                        continue;
+                    }
+                    if (!photo.ValidateSize(600))
+                    {
+                        TempData["Message"] += $"<p class=\"text-danger\">{photo.FileName} file olcusu uygun deyil </p> ";
+                        continue;
+                    }
+
+                    existed.ProductImages.Add(new ProductImg
+                    {
+                        IsPrimary = null,
+                        Url = await photo.CreateFile(_env.WebRootPath, "assets", "images", "website-images")
+                    });
+                }
+            }
+
+
             existed.Name = productVM.Name;
             existed.Price = productVM.Price;
             existed.SKU = productVM.SKU;
@@ -342,6 +457,11 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (product is null) return NotFound();
+
+            foreach (ProductImg image in product.ProductImages)
+            {
+                image.Url.DeleteFile(_env.WebRootPath, "assets", "images", "website-images");
+            }
 
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
