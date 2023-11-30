@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿ using Microsoft.EntityFrameworkCore;
 using task15_11fronttoback.Models;
 
 namespace task15_11fronttoback.DAL
@@ -19,6 +19,7 @@ namespace task15_11fronttoback.DAL
 
         public DbSet<Color> Colors { get; set; }
         public DbSet<Size> Sizes { get; set; }
+        public DbSet<Setting> Settings { get; set; }
         public DbSet<ProductColor> ProductColors { get; set; }
         public DbSet<ProductSize> ProductSizes { get; set; }
 

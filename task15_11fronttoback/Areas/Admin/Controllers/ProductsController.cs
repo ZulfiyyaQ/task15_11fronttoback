@@ -205,10 +205,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             productVM.ProductImages = existed.ProductImages;
             if (!ModelState.IsValid)
             {
-                productVM.Categories = await _context.Categories.ToListAsync();
-                productVM.Tags = await _context.Tags.ToListAsync();
-                productVM.Colors = await _context.Colors.ToListAsync();
-                productVM.Sizes = await _context.Sizes.ToListAsync();
+                GetList(ref productVM);
                 return View(productVM);
             }
 
@@ -219,10 +216,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             bool result = _context.Products.Any(c => c.Name == productVM.Name && c.Id != id);
             if (result)
             {
-                productVM.Categories = await _context.Categories.ToListAsync();
-                productVM.Tags = await _context.Tags.ToListAsync();
-                productVM.Colors = await _context.Colors.ToListAsync();
-                productVM.Sizes = await _context.Sizes.ToListAsync();
+                GetList(ref productVM);
                 ModelState.AddModelError("Name", "Product already exists");
                 return View(productVM);
             }
@@ -231,10 +225,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             bool result1 = await _context.Categories.AnyAsync(c => c.Id == productVM.CategoryId);
             if (!result1)
             {
-                productVM.Categories = await _context.Categories.ToListAsync();
-                productVM.Tags = await _context.Tags.ToListAsync();
-                productVM.Colors = await _context.Colors.ToListAsync();
-                productVM.Sizes = await _context.Sizes.ToListAsync();
+                GetList(ref productVM);
                 ModelState.AddModelError("CategoryId", "Category not found, choose another one.");
                 return View(productVM);
             }
@@ -243,19 +234,13 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             {
                 if (!productVM.MainPhoto.ValidateType("image/"))
                 {
-                    productVM.Categories = await _context.Categories.ToListAsync();
-                    productVM.Tags = await _context.Tags.ToListAsync();
-                    productVM.Colors = await _context.Colors.ToListAsync();
-                    productVM.Sizes = await _context.Sizes.ToListAsync();
+                    GetList(ref productVM);
                     ModelState.AddModelError("MainPhoto", "Tipi uygun deyil");
                     return View(productVM);
                 }
                 if (!productVM.MainPhoto.ValidateSize(600))
                 {
-                    productVM.Categories = await _context.Categories.ToListAsync();
-                    productVM.Tags = await _context.Tags.ToListAsync();
-                    productVM.Colors = await _context.Colors.ToListAsync();
-                    productVM.Sizes = await _context.Sizes.ToListAsync();
+                    GetList(ref productVM);
                     ModelState.AddModelError("MainPhoto", "Olcusu uygun deyil");
                     return View(productVM);
                 }
@@ -265,19 +250,13 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             {
                 if (!productVM.HoverPhoto.ValidateType("image/"))
                 {
-                    productVM.Categories = await _context.Categories.ToListAsync();
-                    productVM.Tags = await _context.Tags.ToListAsync();
-                    productVM.Colors = await _context.Colors.ToListAsync();
-                    productVM.Sizes = await _context.Sizes.ToListAsync();
+                    GetList(ref productVM);
                     ModelState.AddModelError("HoverPhoto", "Tipi uygun deyil");
                     return View(productVM);
                 }
                 if (!productVM.HoverPhoto.ValidateSize(600))
                 {
-                    productVM.Categories = await _context.Categories.ToListAsync();
-                    productVM.Tags = await _context.Tags.ToListAsync();
-                    productVM.Colors = await _context.Colors.ToListAsync();
-                    productVM.Sizes = await _context.Sizes.ToListAsync();
+                    GetList(ref productVM);
                     ModelState.AddModelError("HoverPhoto", "Olcusu uygun deyil");
                     return View(productVM);
                 }
@@ -345,10 +324,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
                 bool tagResult = await _context.Tags.AnyAsync(t => t.Id == tagId);
                 if (!tagResult)
                 {
-                    productVM.Categories = await _context.Categories.ToListAsync();
-                    productVM.Tags = await _context.Tags.ToListAsync();
-                    productVM.Colors = await _context.Colors.ToListAsync();
-                    productVM.Sizes = await _context.Sizes.ToListAsync();
+                    GetList(ref productVM);
                     ModelState.AddModelError("TagIds", "Tag not found, choose another one.");
                     return View();
 
@@ -469,6 +445,13 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
         private void GetList(ref CreateProductsVM vm)
+        {
+            vm.Categories = _context.Categories.ToList();
+            vm.Tags = _context.Tags.ToList();
+            vm.Colors = _context.Colors.ToList();
+            vm.Sizes = _context.Sizes.ToList();
+        }
+        private void GetList(ref UpdateProductVM vm)
         {
             vm.Categories = _context.Categories.ToList();
             vm.Tags = _context.Tags.ToList();

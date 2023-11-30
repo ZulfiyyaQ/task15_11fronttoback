@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using task15_11fronttoback.DAL;
+using task15_11fronttoback.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddScoped<LayoutService>();
 var app = builder.Build();
 app.UseRouting();
 app.UseStaticFiles();
