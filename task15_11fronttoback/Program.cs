@@ -7,6 +7,7 @@ using task15_11fronttoback.Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddSession();
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     options.Password.RequiredLength = 8;
@@ -24,13 +25,13 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
 ).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddScoped<LayoutService>();
-//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 var app = builder.Build();
 
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-//app.UseSession();
-app.UseRouting();
+app.UseSession();
 app.UseStaticFiles();
 
 app.UseEndpoints(endpoints =>

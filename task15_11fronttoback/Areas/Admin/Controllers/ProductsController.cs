@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
@@ -11,6 +12,7 @@ using task15_11fronttoback.ViewModels;
 namespace task15_11fronttoback.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    
     public class ProductsController : Controller
     {
         private readonly AppDbContext _context;
@@ -21,12 +23,13 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             _context = context;
             _env = env;
         }
+        [Authorize(Roles = "Admin,Moderator")]
         public async Task<IActionResult> Index()
         {
             List<Product> products = await _context.Products.Include(x => x.Category).Include(p => p.ProductImages.Where(p => p.IsPrimary == true)).ToListAsync();
             return View(products);
         }
-
+        [Authorize(Roles = "Admin,Moderator")]
         public async Task<IActionResult> Create()
         {
             CreateProductsVM productvm = new();
@@ -166,6 +169,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        [Authorize(Roles = "Admin,Moderator")]
         public async Task<IActionResult> Update(int id)
         {
             if (id <= 0) return BadRequest();
@@ -420,6 +424,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             return View(product);
 
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest();

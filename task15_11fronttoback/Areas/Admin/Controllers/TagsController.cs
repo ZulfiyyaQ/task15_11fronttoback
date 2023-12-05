@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using task15_11fronttoback.Areas.Admin.ViewModels;
@@ -8,6 +9,7 @@ using task15_11fronttoback.Models;
 namespace task15_11fronttoback.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    
     public class TagsController : Controller
     {
 
@@ -16,14 +18,14 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Admin,Moderator")]
         public async Task<IActionResult> Index()
         {
             List<Tag> tags = await _context.Tags.Include(t => t.ProductTags).ToListAsync();
 
             return View(tags);
         }
-
+        [Authorize(Roles = "Admin,Moderator")]
         public async Task<IActionResult> Create()
         {
             return View();
@@ -53,6 +55,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));  
         }
+        [Authorize(Roles = "Admin,Moderator")]
         public IActionResult Update(int id)
         {
             return View();
@@ -80,7 +83,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> Delete(int id)
         {

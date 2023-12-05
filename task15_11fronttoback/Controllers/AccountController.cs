@@ -13,11 +13,13 @@ namespace task15_11fronttoback.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
         public IActionResult Register()
         {
@@ -25,7 +27,7 @@ namespace task15_11fronttoback.Controllers
         }
         [HttpPost]
 
-        public async Task< IActionResult> Register(RegisterVM uservm)
+        public async Task<IActionResult> Register(RegisterVM uservm)
         {
             if (!ModelState.IsValid) return View();
 
@@ -48,18 +50,19 @@ namespace task15_11fronttoback.Controllers
             {
                 ModelState.AddModelError("Genders", "Invalid gender");
                 return View();
-            } 
-            AppUser user = new AppUser 
+            }
+            AppUser user = new AppUser
             {
-                Name=uservm.Name,
-                Surname=uservm.Surname,
-                Email=uservm.Email,
-                UserName=uservm.UserName
-                
-            };
-             IdentityResult result=await _userManager.CreateAsync(user, uservm.Password);
+                Name = uservm.Name,
+                Surname = uservm.Surname,
+                Email = uservm.Email,
+                UserName = uservm.UserName,
+                gender = uservm.Genders
 
-            if(!result.Succeeded)
+            };
+            IdentityResult result = await _userManager.CreateAsync(user, uservm.Password);
+
+            if (!result.Succeeded)
             {
                 foreach (IdentityError error in result.Errors)
                 {
@@ -67,14 +70,70 @@ namespace task15_11fronttoback.Controllers
                 }
                 return View();
             }
-
+            await _userManager.AddToRoleAsync(user, UserRole.Member.ToString());
             await _signInManager.SignInAsync(user, false);
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginVM loginvm, string? returnurl)
+        {
+            if (!ModelState.IsValid) return View();
+
+            AppUser user = await _userManager.FindByNameAsync(loginvm.UsernameOrEmail);
+            if (user is null)
+            {
+                user = await _userManager.FindByEmailAsync(loginvm.UsernameOrEmail);
+                if (user is null)
+                {
+                    ModelState.AddModelError(String.Empty, "Username,Email or Password is incorrect");
+                    return View();
+                }
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user, loginvm.Password, loginvm.IsRemembered, true);
+
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError(String.Empty, "So many incorrect tries, please try later");
+                return View();
+            }
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(String.Empty, "Username,Email or Password is incorrect");
+                return View();
+            }
+            if (returnurl is null) return RedirectToAction("Index", "Home");
+
+
+            return Redirect(returnurl);
+        }
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        public async Task<IActionResult> CreateRole()
+        {
+            foreach (UserRole role in Enum.GetValues(typeof(UserRole)))
+            {
+                if (!(await _roleManager.RoleExistsAsync(role.ToString())))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole
+                    {
+                        Name = role.ToString()
+                    });
+
+                }
+
+            }
             return RedirectToAction("Index", "Home");
         }
     }

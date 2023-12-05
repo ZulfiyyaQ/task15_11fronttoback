@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using task15_11fronttoback.Areas.Admin.ViewModels;
@@ -8,6 +9,7 @@ using task15_11fronttoback.Models;
 namespace task15_11fronttoback.Areas.Admin.Controllers
 {
     [Area("Admin")]
+   
     public class SizesController : Controller
     {
         private readonly AppDbContext _context;
@@ -16,12 +18,13 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
         {
             _context = context;
         }
+        [Authorize(Roles = "Admin,Moderator")]
         public async Task<IActionResult> Index()
         {
             List<Size> Sizes = await _context.Sizes.Include(x => x.ProductSizes).ThenInclude(p => p.Product).ToListAsync();
             return View(Sizes);
         }
-
+        [Authorize(Roles = "Admin,Moderator")]
         public IActionResult Create()
         {
             return View();
@@ -50,7 +53,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-
+        [Authorize(Roles = "Admin,Moderator")]
         public IActionResult Update(int id)
         {
             return View();
@@ -79,7 +82,7 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest();
