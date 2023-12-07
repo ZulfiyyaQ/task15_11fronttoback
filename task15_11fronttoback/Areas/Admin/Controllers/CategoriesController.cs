@@ -10,6 +10,7 @@ using task15_11fronttoback.ViewModels;
 namespace task15_11fronttoback.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AutoValidateAntiforgeryToken]
     
     public class CategoriesController : Controller
     {

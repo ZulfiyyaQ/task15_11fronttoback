@@ -108,6 +108,9 @@ namespace task15_11fronttoback.Controllers
                 ModelState.AddModelError(String.Empty, "Username,Email or Password is incorrect");
                 return View();
             }
+
+            Response.Cookies.Delete("Basket");
+
             if (returnurl is null) return RedirectToAction("Index", "Home");
 
 

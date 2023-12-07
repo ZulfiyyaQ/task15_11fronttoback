@@ -8,5 +8,7 @@ namespace task15_11fronttoback.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public Gender gender { get; set; }
+        public List<BasketItem> BasketItems { get; set; }
+
     }
 }

@@ -12,7 +12,8 @@ using task15_11fronttoback.Utilities.Extensions;
 namespace task15_11fronttoback.Areas.Admin.Controllers
 {
     [Area("Admin")]
-   
+    [AutoValidateAntiforgeryToken]
+
     public class SlidesController : Controller
     {
 

@@ -8,7 +8,8 @@ using task15_11fronttoback.Models;
 namespace task15_11fronttoback.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    
+    [AutoValidateAntiforgeryToken]
+
     public class ColorsController : Controller
     {
         private readonly AppDbContext _context;
