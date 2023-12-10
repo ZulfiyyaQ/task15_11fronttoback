@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using task15_11fronttoback.DAL;
+using task15_11fronttoback.Interfaces;
 using task15_11fronttoback.Models;
 using task15_11fronttoback.Services;
 
@@ -25,6 +26,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
 ).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddScoped<LayoutService>();
+builder.Services.AddScoped<IEmailService,EmailService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 var app = builder.Build();
 

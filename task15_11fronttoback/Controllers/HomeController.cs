@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using task15_11fronttoback.DAL;
 using task15_11fronttoback.Models;
+using task15_11fronttoback.Services;
 using task15_11fronttoback.ViewModels;
 
 namespace task15_11fronttoback.Controllers
@@ -10,14 +11,16 @@ namespace task15_11fronttoback.Controllers
     public class HomeController : Controller
     {
         private readonly AppDbContext _context;
-
+       
 
         public HomeController(AppDbContext context)
         {
             _context = context;
+            
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+
             List<Slide> slides = _context.Slides.OrderBy(p => p.Order).ToList();
             List<Product> productList = _context.Products.Include(x => x.ProductImages).ToList();
 

@@ -44,7 +44,7 @@ namespace task15_11fronttoback.ViewComponents
 
             if(_http.HttpContext.User.Identity.IsAuthenticated)
             {
-                AppUser? user = await _userManager.Users.Include(u => u.BasketItems)
+                AppUser? user = await _userManager.Users.Include(u => u.BasketItems.Where(bi => bi.OrderId == null))
                    .ThenInclude(bi => bi.Product)
                    .ThenInclude(p => p.ProductImages.Where(pi => pi.IsPrimary == true))
                     .FirstOrDefaultAsync(u => u.Id ==_http.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));

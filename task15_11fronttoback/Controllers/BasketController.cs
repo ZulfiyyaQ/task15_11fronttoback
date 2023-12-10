@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Security.Claims;
 using task15_11fronttoback.DAL;
+using task15_11fronttoback.Interfaces;
 using task15_11fronttoback.Models;
 using task15_11fronttoback.ViewModels;
 
@@ -14,11 +15,13 @@ namespace task15_11fronttoback.Controllers
     {
         private readonly AppDbContext _context;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IEmailService _emailService;
 
-        public BasketController(AppDbContext context, UserManager<AppUser> userManager)
+        public BasketController(AppDbContext context, UserManager<AppUser> userManager,IEmailService emailService )
         {
             _context = context;
             _userManager = userManager;
+            _emailService = emailService;
         }
 
         public async Task<IActionResult> Index()
@@ -26,7 +29,7 @@ namespace task15_11fronttoback.Controllers
             List<BasketItemVM> basketvm = new List<BasketItemVM>();
             if (User.Identity.IsAuthenticated)
             {
-                AppUser? user = await _userManager.Users.Include(u => u.BasketItems)
+                AppUser? user = await _userManager.Users.Include(u => u.BasketItems.Where(bi => bi.OrderId == null))
                     .ThenInclude(bi => bi.Product)
                     .ThenInclude(p => p.ProductImages.Where(pi => pi.IsPrimary == true))
                     .FirstOrDefaultAsync(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -86,7 +89,7 @@ namespace task15_11fronttoback.Controllers
             {
                 //AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-                AppUser user = await _userManager.Users.Include(u => u.BasketItems).FirstOrDefaultAsync(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                AppUser user = await _userManager.Users.Include(u => u.BasketItems.Where(bi => bi.OrderId == null)).FirstOrDefaultAsync(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
 
                 BasketItem item = user.BasketItems.FirstOrDefault(b => b.ProductId == id);
                 if (item is null)
@@ -96,7 +99,8 @@ namespace task15_11fronttoback.Controllers
                         AppUserId = user.Id,
                         ProductId = product.Id,
                         Price = product.Price,
-                        Count = 1
+                        Count = 1,
+                        OrderId=null 
                     };
                     //await _context.BasketItems.AddAsync(item);
                     user.BasketItems.Add(item);
@@ -177,7 +181,7 @@ namespace task15_11fronttoback.Controllers
             {
                
 
-                AppUser user = await _userManager.Users.Include(u => u.BasketItems).FirstOrDefaultAsync(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                AppUser user = await _userManager.Users.Include(u => u.BasketItems.Where(bi => bi.OrderId == null)).FirstOrDefaultAsync(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
 
 
                 if (user is not null)
@@ -221,5 +225,56 @@ namespace task15_11fronttoback.Controllers
         {
             return Content(Request.Cookies["Basket"]);
         }
+
+        public async Task<IActionResult> CheckOut()
+        {
+            AppUser user=await _userManager.Users
+                .Include(u=>u.BasketItems.Where(bi=>bi.OrderId==null))
+                .ThenInclude(bi=>bi.Product)
+                .FirstOrDefaultAsync(U=>U.Id==User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            OrderVM ordervm = new OrderVM
+            { 
+               BasketItems=user.BasketItems
+            };
+
+            return View(ordervm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CheckOut(OrderVM ordervm)
+        {
+            AppUser user = await _userManager.Users
+               .Include(u => u.BasketItems.Where(bi => bi.OrderId == null))
+               .ThenInclude(bi => bi.Product)
+               .FirstOrDefaultAsync(U => U.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (!ModelState.IsValid)
+            {
+                ordervm.BasketItems = user.BasketItems;
+                return View(ordervm);
+            }
+            decimal total = 0;
+            foreach (BasketItem item in user.BasketItems)
+            {
+                item.Price = item.Product.Price;
+                total += item.Count * item.Price;
+            }
+
+            Order order = new Order
+            { 
+                Status=null,
+                Address=ordervm.Address,
+                PurchaseAt=DateTime.Now,
+                AppUserId=user.Id,
+                BasketItems=user.BasketItems,
+                TotalPrice=total
+            };
+
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
+
+            //await _emailService.SendMailAsync(user.Email,"Your Order",)
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

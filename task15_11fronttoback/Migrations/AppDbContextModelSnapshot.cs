@@ -310,7 +310,26 @@ namespace task15_11fronttoback.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("PurchaseAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Orders");
                 });
@@ -609,6 +628,17 @@ namespace task15_11fronttoback.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("task15_11fronttoback.Models.Order", b =>
+                {
+                    b.HasOne("task15_11fronttoback.Models.AppUser", "AppUser")
+                        .WithMany("Orders")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("task15_11fronttoback.Models.Product", b =>
                 {
                     b.HasOne("task15_11fronttoback.Models.Category", "Category")
@@ -691,6 +721,8 @@ namespace task15_11fronttoback.Migrations
             modelBuilder.Entity("task15_11fronttoback.Models.AppUser", b =>
                 {
                     b.Navigation("BasketItems");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("task15_11fronttoback.Models.Category", b =>
