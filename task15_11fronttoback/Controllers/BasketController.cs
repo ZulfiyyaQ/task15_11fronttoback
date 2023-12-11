@@ -272,7 +272,62 @@ namespace task15_11fronttoback.Controllers
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
 
-            //await _emailService.SendMailAsync(user.Email,"Your Order",)
+            string body = @"
+    <html>
+    <head>
+        <style>
+            table {
+                border-collapse: separate;
+                border-spacing: 0 10px;
+                width: 80%; 
+                margin: auto; 
+            }
+            th, td {
+                border: 1px solid #dddddd;
+                text-align: center; 
+                padding: 10px;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            h2 {
+                text-align: center; 
+            }
+            h4 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Order Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>";
+
+foreach (var item in order.BasketItems)
+{
+    body += $@"
+        <tr>
+            <td>{item.Product.Name}</td>
+            <td>{item.Price}</td>
+            <td>{item.Count}</td>
+        </tr>";
+}
+
+body += @"
+            </tbody>
+        </table>
+    </body>
+    </html>";
+
+            await _emailService.SendMailAsync(user.Email, "Your Order", body, true);
             return RedirectToAction("Index", "Home");
         }
 
