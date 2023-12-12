@@ -25,9 +25,14 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             _env = env;
         }
         [Authorize(Roles = "Admin,Moderator")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page)
         {
-            List<Product> products = await _context.Products.Include(x => x.Category).Include(p => p.ProductImages.Where(p => p.IsPrimary == true)).ToListAsync();
+            int count = await _context.Products.CountAsync();
+            ViewBag.TotalPage = Math.Ceiling(count / 3);
+            List<Product> products = await _context.Products.Skip(page*3).Take(3)
+                .Include(x => x.Category)
+                .Include(p => p.ProductImages.Where(p => p.IsPrimary == true))
+                .ToListAsync();
             return View(products);
         }
         [Authorize(Roles = "Admin,Moderator")]
