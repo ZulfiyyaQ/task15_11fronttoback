@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using task15_11fronttoback.DAL;
 using task15_11fronttoback.Models;
+using task15_11fronttoback.Utilities.Exceptions;
 using task15_11fronttoback.ViewModels;
 
 namespace task15_11fronttoback.Controllers
@@ -24,10 +25,7 @@ namespace task15_11fronttoback.Controllers
         
         public IActionResult Details(int id)
         {
-            if (id <= 0)
-            {
-                return BadRequest();
-            }
+            if (id <= 0) throw new WrongRequestException("Gonderilen sorgu yalnisdir");
 
             Product product = _context.Products
                 .Include(x => x.Category)
@@ -37,10 +35,8 @@ namespace task15_11fronttoback.Controllers
                 .Include(x => x.ProductSizes).ThenInclude(pt => pt.Size)
                 .FirstOrDefault(x => x.Id == id);
 
-            if (product == null)
-            {
-                return NotFound();
-            }
+            if (product is null) throw new NotFoundException("Bele bir mehsul tapilmadi");
+
 
 
             ProductVM productvm = new ProductVM

@@ -1328,3 +1328,4 @@ C:\Users\Asus\Desktop\ \Pronia\task15_11fronttoback\task15_11fronttoback\obj\De
 C:\Users\Asus\Desktop\ \Pronia\task15_11fronttoback\task15_11fronttoback\obj\Debug\net7.0\ref\task15_11fronttoback.dll
 C:\Users\Asus\Desktop\Pronia\task15_11fronttoback\task15_11fronttoback\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\asimanjg\Desktop\task15_11fronttoback\task15_11fronttoback\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Asus\Desktop\task15_11fronttoback\task15_11fronttoback\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

@@ -19,11 +19,27 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             _context = context;
         }
         [Authorize(Roles = "Admin,Moderator")]
-        public async Task<IActionResult> Index()
+
+
+        public async Task<IActionResult> Index(int page=1)
         {
-            List<Color> colors = await _context.Colors.Include(x=>x.ProductColors).ThenInclude(p=>p.Product).ToListAsync();
-            return View(colors);
+            double count = await _context.Categories.CountAsync();
+
+            List<Color> colors = await _context.Colors.Skip((page - 1) * 3).Take(3)
+                .Include(x=>x.ProductColors).ThenInclude(p=>p.Product).ToListAsync();
+            PaginationVM<Color> paginateVM = new PaginationVM<Color>
+            {
+                CurrentPage = page,
+                TotalPage = Math.Ceiling(count / 3),
+                Items = colors
+
+            };
+            return View(paginateVM);
+           
         }
+
+
+
         [Authorize(Roles = "Admin,Moderator")]
         public IActionResult Create()
         {
@@ -55,9 +71,17 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
         }
         [Authorize(Roles = "Admin,Moderator")]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            return View();
+            Color existed = await _context.Colors.FirstOrDefaultAsync(p => p.Id == id);
+            if (existed is null) return NotFound();
+
+            UpdateColorsVM vm = new()
+            {
+                Name = existed.Name,
+
+            };
+            return View(vm);
         }
 
         [HttpPost]

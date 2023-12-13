@@ -55,9 +55,17 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
         }
         [Authorize(Roles = "Admin,Moderator")]
-        public IActionResult Update(int id)
+        public async Task< IActionResult> Update(int id)
         {
-            return View();
+            Size existed = await _context.Sizes.FirstOrDefaultAsync(p => p.Id == id);
+            if (existed is null) return NotFound();
+
+            UpdateSizesVM vm = new()
+            {
+                Name = existed.Name,
+
+            };
+            return View(vm);
         }
 
         [HttpPost]

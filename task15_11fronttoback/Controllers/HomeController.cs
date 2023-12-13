@@ -21,6 +21,7 @@ namespace task15_11fronttoback.Controllers
         public async Task<IActionResult> Index()
         {
 
+
             List<Slide> slides = _context.Slides.OrderBy(p => p.Order).ToList();
             List<Product> productList = _context.Products.Include(x => x.ProductImages).ToList();
 
@@ -33,7 +34,11 @@ namespace task15_11fronttoback.Controllers
             return View(vm);
         }
 
-         
+        public async Task<IActionResult> ErrorPage(string error)
+        {
+            return View(model:error);
+        }
+
         public IActionResult About()
         {
             return View();

@@ -1,6 +1,6 @@
-﻿@model List<Category>
+﻿@model PaginationVM<Category>
 @{
-    int count = 0;
+    int count = (Model.CurrentPage - 1) * 3;
 }
 <div class="main-panel">
     <div class="content-wrapper">
@@ -35,7 +35,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (Category item in Model)
+                                    @foreach (Category item in Model.Items)
                                     {
                                         count++;
                                         <tr>
@@ -69,6 +69,17 @@
                                 </tbody>
                             </table>
                         </div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item @(Model.CurrentPage-1==0?"disabled":"")"><a class="page-link " asp-route-page="@(Model.CurrentPage-1)" asp-action="index" asp-controller="categories">Previous</a></li>
+                                @for (int i = 1; i <= Model.TotalPage; i++)
+                                {
+                                    <li class="page-item @(i==Model.CurrentPage?"disabled":"") "><a class="page-link" asp-route-page="@(i)" asp-action="index" asp-controller="categories">@i</a></li>
+                                }
+
+                                <li class="page-item @(Model.CurrentPage==Model.TotalPage?"disabled":"")"><a class="page-link " asp-route-page="@(Model.CurrentPage+1)" asp-action="index" asp-controller="categories">Next</a></li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

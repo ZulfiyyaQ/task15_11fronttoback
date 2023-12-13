@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using task15_11fronttoback.DAL;
 using task15_11fronttoback.Interfaces;
+using task15_11fronttoback.Midddlewares;
 using task15_11fronttoback.Models;
 using task15_11fronttoback.Services;
 
@@ -36,6 +37,7 @@ app.UseAuthorization();
 app.UseSession();
 app.UseStaticFiles();
 
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(

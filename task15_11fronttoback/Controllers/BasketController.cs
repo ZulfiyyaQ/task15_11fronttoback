@@ -7,6 +7,7 @@ using System.Security.Claims;
 using task15_11fronttoback.DAL;
 using task15_11fronttoback.Interfaces;
 using task15_11fronttoback.Models;
+using task15_11fronttoback.Utilities.Exceptions;
 using task15_11fronttoback.ViewModels;
 
 namespace task15_11fronttoback.Controllers
@@ -79,11 +80,11 @@ namespace task15_11fronttoback.Controllers
         }
         public async Task<IActionResult> Addbasket(int id)
         {
-            if (id <= 0) return BadRequest();
+            if (id <= 0)  throw new WrongRequestException("Gonderilen sorgu yalnisdir") ;
 
             Product product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
-            if (product is null) return NotFound();
+            if (product is null) throw new NotFoundException("Bele bir mehsul tapilmadi") ;
 
             if (User.Identity.IsAuthenticated)
             {
@@ -167,13 +168,13 @@ namespace task15_11fronttoback.Controllers
        
         public async Task<IActionResult> Remove(int id)
         {
-            if (id <= 0) return BadRequest();
+            if (id <= 0) throw new WrongRequestException("Gonderilen sorgu yalnisdir");
 
             Product product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
-            if (product is null) return NotFound();
+            if (product is null) throw new NotFoundException("Bele bir mehsul tapilmadi");
 
-           
+
 
             List<BasketCookieItemVM> basket = new List<BasketCookieItemVM>();
 

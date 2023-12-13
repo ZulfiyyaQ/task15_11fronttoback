@@ -57,9 +57,17 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));  
         }
         [Authorize(Roles = "Admin,Moderator")]
-        public IActionResult Update(int id)
+        public async Task< IActionResult> Update(int id)
         {
-            return View();
+            Tag existed = await _context.Tags.FirstOrDefaultAsync(p => p.Id == id);
+            if (existed is null) return NotFound();
+
+            UpdateTagsVM vm = new()
+            {
+                Name = existed.Name,
+
+            };
+            return View(vm);
         }
 
         [HttpPost]

@@ -21,11 +21,26 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             _context = context;
         }
         [Authorize(Roles = "Admin,Moderator")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page=1)
         {
-            List<Category> categories = await _context.Categories.Include(c => c.Products).ToListAsync();
-            return View(categories);
+            double count = await _context.Categories.CountAsync();
+
+
+            List<Category> categories = await _context.Categories.Skip((page - 1) * 3).Take(3)
+                .Include(c => c.Products).ToListAsync();
+
+            PaginationVM<Category> paginateVM = new PaginationVM<Category>
+            {
+                CurrentPage = page,
+                TotalPage = Math.Ceiling(count / 3),
+                Items = categories
+
+            };
+            return View(paginateVM);
         }
+
+
+
         [Authorize(Roles = "Admin,Moderator")]
         public IActionResult Create()
         {
@@ -57,9 +72,17 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
 
         }
         [Authorize(Roles = "Admin,Moderator")]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            return View();
+            Category existed = await _context.Categories.FirstOrDefaultAsync(p => p.Id == id);
+            if (existed is null) return NotFound();
+
+            UpdateCategoriesVM vm = new()
+            {
+                Name = existed.Name,
+
+            };
+            return View(vm);
         }
 
         [HttpPost]

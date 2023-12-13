@@ -25,15 +25,23 @@ namespace task15_11fronttoback.Areas.Admin.Controllers
             _env = env;
         }
         [Authorize(Roles = "Admin,Moderator")]
-        public async Task<IActionResult> Index(int page)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            int count = await _context.Products.CountAsync();
-            ViewBag.TotalPage = Math.Ceiling(count / 3);
-            List<Product> products = await _context.Products.Skip(page*3).Take(3)
+            double count = await _context.Products.CountAsync();
+           
+            List<Product> products = await _context.Products.Skip((page - 1) * 3).Take(3)
                 .Include(x => x.Category)
                 .Include(p => p.ProductImages.Where(p => p.IsPrimary == true))
                 .ToListAsync();
-            return View(products);
+
+            PaginationVM<Product> paginateVM = new PaginationVM<Product>
+            {
+                CurrentPage = page,
+                TotalPage = Math.Ceiling(count / 3),
+                Items = products
+
+            };
+            return View(paginateVM);
         }
         [Authorize(Roles = "Admin,Moderator")]
         public async Task<IActionResult> Create()
